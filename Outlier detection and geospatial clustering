@@ -1,0 +1,14 @@
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Prepare data for clustering: [Lat, Long derived from Pincode, Activity_Score]
+features = merged_df[['latitude', 'longitude', 'total_updates']].values()
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(features)
+
+# Identify 4 clusters: High Activity, Medium, Low, Rural/Remote
+kmeans = KMeans(n_clusters=4, random_state=42)
+merged_df['service_cluster'] = kmeans.fit_predict(scaled_features)
+
+# Output: Districts in Cluster 3 are designated as 'High Priority' for Vans
+high_priority_districts = merged_df[merged_df['service_cluster'] == 3]['district']
