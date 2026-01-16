@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+
+# Load Datasets
+bio_df = pd.read_csv('api_data_aadhar_biometric_500000_1000000.csv')
+demo_df = pd.read_csv('api_data_aadhar_demographic_500000_1000000.csv')
+enroll_df = pd.read_csv('api_data_aadhar_enrolment_0_500000.csv')
+
+# Comprehensive State Mapping Dictionary
+state_mapping = {
+    'Orissa': 'Odisha', 
+    'Pondicherry': 'Puducherry',
+    'Gurgaon': 'Gurugram', 
+    'Bangalore': 'Bengaluru'
+}
+
+dfs = [bio_df, demo_df, enroll_df]
+for df in dfs:
+    # Clean column names
+    df.columns = df.columns.str.strip().str.lower()
+    
+    # Apply standardisation and Date parsing
+    df['state'] = df['state'].replace(state_mapping)
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    
+    # Handle missing Pincodes (Critical for Geo-mapping)
+    df.dropna(subset=['pincode'], inplace=True)
