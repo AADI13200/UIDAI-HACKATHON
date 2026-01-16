@@ -1,0 +1,17 @@
+# Algorithm for Prioritising Complaints
+def calculate_priority(complaint_type, severity, frequency):
+    priority_score = 0
+    
+    # Weighted Scoring System
+    if complaint_type == 'Biometric Failure':
+        priority_score += 50
+    elif complaint_type == 'Server Down':
+        priority_score += 80
+    elif complaint_type == 'Address Update':
+        priority_score += 10
+        
+    # Multiply by user urgency severity (1-10)
+    return priority_score * severity
+
+# Result: Top priority problems are flagged for immediate Van dispatch
+top_issues = df.sort_values(by='priority_score', ascending=False).head(10)
