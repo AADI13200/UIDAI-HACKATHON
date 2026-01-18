@@ -3,3 +3,7 @@
 3.1.5 Dataset Integration (merged_df)
         ↓
 3.2 Outlier Detection & Geospatial Clustering
+
+
+# This flowchart shows the pipeline between the data standardisation , cleaning and clustering 
+# The jupyter notebook(.ipynb) shows the code for the pipelines
